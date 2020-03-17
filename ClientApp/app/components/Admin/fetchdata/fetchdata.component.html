@@ -1,0 +1,70 @@
+
+<div class='container-fluid'>
+    <div class='row'>
+        <div class='col-sm-3'>
+            <nav-menu></nav-menu>
+        </div>
+        <div class="col-sm-9 body-content">
+            <br /><br />
+            <nav class="navbar navbar-inverse">
+                <form class="navbar-form navbar-right">
+
+                    <div class="input-group">
+                        <input type="text" [(ngModel)]="nameUser" [ngModelOptions]="{standalone:true}" class="form-control" placeholder="Search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" (click)="Search()">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </nav>
+            <hr/>
+                <h3 [ngStyle]="{'color':'blue'}">Table of User</h3>
+
+                <table class='table'>
+                    <thead>
+                        <tr>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>Date</th>
+                            <th>Tel</th>
+                            <th>Mail</th>
+                            <th>Street</th>
+                            <th>Zip</th>
+                            <th>City</th>
+                            <th>Region</th>
+                            <th>Country</th>
+                            <th>Type</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of tableUsers| filterUser:nameUser">
+                            <td>{{ user.firstName }}</td>
+                            <td>{{ user.lastName }}</td>
+                            <td>{{ user.date | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ user.numberTel }}</td>
+                            <td>{{ user.mail }}</td>
+                            <td>{{ user.address.street }}</td>
+                            <td>{{ user.address.zip }}</td>
+                            <td>{{ user.address.city }}</td>
+                            <td>{{ user.address.region }}</td>
+                            <td>{{ user.address.country }}</td>
+                            <td>{{ user.type }}</td>
+                            <td><button class="btn-primary" (click)="detailUser(user)">Modify</button></td>
+                            <td>
+                                <button class="btn-danger" (click)="removeUser(user)">Delete</button>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="alert-success" *ngIf="bool as true"> User's deleted success</div>
+                <div class="alert-danger"> {{ error }}</div>
+        </div>
+
+    </div>
+</div>

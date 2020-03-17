@@ -1,0 +1,106 @@
+﻿
+
+
+<div class='container-fluid'>
+    <div class='row'>
+        <div *ngIf="user.type == 1" class='col-sm-3'>
+            <navManag-menu></navManag-menu>
+        </div>
+        <div *ngIf="user.type == 2" class='col-sm-3'>
+            <navUser-menu></navUser-menu>
+        </div>
+
+        <div class="col-sm-9">
+            <br/><br/>
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button (click)="showCommis()"><span class="glyphicon glyphicon-book"></span></button>
+                    </div>
+                    <form class="navbar-form navbar-right">
+
+                        <div class="input-group">
+                            <input type="text" [(ngModel)]="codeCommis" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Search">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" (click)="Search()">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+            <hr />
+            <div>
+                <div class="well" *ngFor="let com of listCommis | filter:codeCommis | paginate: { id: 'foo', itemsPerPage: 5, currentPage: p, totalItems: listCommis.count }">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <img width="150" height="150" src="../../Images/AngularLogo.png" alt="offer picture" />
+                        </div>
+                        <div class="col-sm-7 center-block">
+                            <h5>{{com.code}}</h5>
+
+                            <h5 [ngStyle]="{'color':'blue'}"><span class="glyphicon glyphicon-envelope"></span> Etat: {{com.libelle}} </h5>
+
+                            <div class="pull-right">
+                                <button id="btnGr" class="btn-primary" (click)="DetailCommis(com)" data-toggle="modal" data-target="#myModal">Detail</button>
+                                <button *ngIf="user.type == 1" id="btnGr" class="btn-danger" (click)="RemoveCommis(com)">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <pagination-controls id="foo"
+                                     (pageChange)="pageChanged($event)"
+                                     maxSize="10"
+                                     directionLinks="true"
+                                     autoHide="false"
+                                     previousLabel="Previous"
+                                     nextLabel="Next"
+                                     screenReaderPaginationLabel="Pagination"
+                                     screenReaderPageLabel="page"
+                                     screenReaderCurrentLabel="You're on page">
+                </pagination-controls>
+            </div>
+            
+        </div>
+
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Members</h4>
+                    </div>
+                    <div class="modal-body">
+                     
+                            <table class='table'>
+                                <thead>
+                                    <tr>
+                                        <th>FirstName</th>
+                                        <th>LastName</th>
+                                        <th>Tel</th>
+                                        <th>Mail</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let user of commisDetail.members">
+                                        <td>{{ user.firstName }}</td>
+                                        <td>{{ user.lastName }}</td>
+                                        <td>{{ user.numberTel }}</td>
+                                        <td>{{ user.mail }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        
+                        
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+   </div>

@@ -1,0 +1,376 @@
+﻿
+<div class='container-fluid' *ngIf="show == false">
+    <div class='row'>
+        <div *ngIf="user.type == 1" class='col-sm-3'>
+            <navManag-menu></navManag-menu>
+        </div>
+        <div *ngIf="user.type == 2" class='col-sm-3'>
+            <navUser-menu></navUser-menu>
+        </div>
+
+        <div id="ProfilImage" class="container col-sm-1">
+
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" class="thumbnail" alt="Angular Logo" width="200" height="200">
+            <br/>
+            <div class="row">
+                <div class="col-sm-7">
+                    <button class="btn-primary" data-toggle="modal" data-target="#myModal">Modify</button>
+                </div>
+
+                 <div *ngIf="user.type == 1" class="col-sm-5">
+                    <button class="btn-danger" (click)="PublishOffer()">Publication</button>
+                </div>
+                <br/><br/>
+                <div>
+                    <div class="alert-success" *ngIf="success"> {{success}} </div>
+                    <div class="alert-danger" *ngIf="error"> {{error}} </div>
+                </div>
+            </div>
+        </div>
+        <div id="ProfilInfo" class="well col-sm-6">
+
+            <div class="my-container">
+                <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+            </div>
+            <div id="profil" class="col-sm-3">
+                <ul>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Code: </h4>  {{offerDetail.code}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Categorie: </h4>  {{offerDetail.categorie.libelle}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Direction:</h4> {{offerDetail.direction.libelle}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}">Etat:</h4> {{offerDetail.etat}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}">Publish:</h4> {{offerDetail.publish}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Intitule:</h4>  {{offerDetail.intitule}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}">Description:</h4> {{offerDetail.description}}
+                    </li>
+                </ul>
+
+            </div>
+            <div id="adress" class="col-sm-3">
+                <ul>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Place Depot:</h4> {{offerDetail.placeDepot}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Date Limit:</h4> {{offerDetail.dateLimit | date: 'dd/MM/yyyy'}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Place Opened:</h4> {{offerDetail.placeOpened}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Date Opened:</h4> {{offerDetail.dateOpened | date: 'dd/MM/yyyy'}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Commission:</h4> {{offerDetail.commission.code}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Manager:</h4> {{offerDetail.manager}}
+                    </li>
+                </ul>
+            </div>
+            <br /><br />
+                  <div class="well col-sm-10">
+                      <h5>iframe whit local url</h5>
+                  
+                  </div>
+        </div>
+
+    </div>
+    <br /><br />
+    <div *ngIf="bidders.length != 0" id="bidd" class="col-sm-9">
+        <ul class="list-group">
+            <li *ngFor="let bid of bidders" class="list-group-item"> <h4> {{bid.firstName}} {{bid.lastName}} <small> {{bid.email}}  &nbsp; {{bid.tel}}</small></h4> <a class="btn-primary" [routerLink]="['/detailbidder', bid.id]">Detail</a> </li>
+        </ul>
+    </div>
+   
+    <div id="Pv" class="alert alert-success col-sm-9" data-toggle="collapse" data-target="#demo">Bidder<span class="caret"></span></div>
+    <div id="demo" class="collapse">
+        
+        <form [formGroup]="bidderForm" (ngSubmit)="SaveBidder()">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>FirstName:</label>
+                    <input name="firstName" formControlName="firstName" [(ngModel)]="bidder.firstName" type="text" class="form-control" />
+                    <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger">
+                        <div *ngIf="firstName.errors.required">
+                            FirsttName is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>LastName:</label>
+                    <input name="lastName" formControlName="lastName" type="text" [(ngModel)]="bidder.lastName" class="form-control" />
+                    <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+                        <div *ngIf="lastName.errors.required">
+                            LastName is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input name="mail" formControlName="mail" type="email" [(ngModel)]="bidder.email" class="form-control" />
+                    <div *ngIf="mail.invalid && (mail.dirty || mail.touched)" class="alert alert-danger">
+                        <div *ngIf="mail.errors.required">
+                            L'email is required.
+                        </div>
+                        <div *ngIf="mail.errors.pattern">
+                            L'email n'est pas valide
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Tel:</label>
+                    <input type="tel" name="telephone" formControlName="telephone" [(ngModel)]="bidder.tel" class="form-control" />
+                    <div *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)" class="alert alert-danger">
+                        <div *ngIf="telephone.errors.required">
+                            Telephone is required.
+                        </div>
+                        <div *ngIf="telephone.errors.pattern">
+                            Telephone n'est pas valide
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Fax:</label>
+                    <input type="text" name="fax" formControlName="fax" [(ngModel)]="bidder.fax" class="form-control" />
+                    <div *ngIf="fax.invalid && (fax.dirty || fax.touched)" class="alert alert-danger">
+                        <div *ngIf="fax.errors.required">
+                            Fax is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Domaine:</label>
+                    <input type="text" name="domaine" formControlName="domaine" [(ngModel)]="bidder.domaine" class="form-control" />
+                    <div *ngIf="domaine.invalid && (domaine.dirty || domaine.touched)" class="alert alert-danger">
+                        <div *ngIf="domaine.errors.required">
+                            Domaine is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Type Enterprise:</label>
+                    <select name="type" formControlName="type" [(ngModel)]="bidder.typeEnterprise" class="form-control">
+                        <option *ngFor="let typ of typeEnterp" [ngValue]="typ"> {{typ}} </option>
+                    </select>
+                    <div *ngIf="type.invalid && (type.dirty || type.touched)" class="alert alert-danger">
+                        <div *ngIf="type.errors.required">
+                            Type is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Street:</label>
+                    <input type="text" formControlName="street" [(ngModel)]="bidder.address.street" name="street" class="form-control" />
+                    <div *ngIf="street.invalid && (street.dirty || street.touched)" class="alert alert-danger">
+                        <div *ngIf="street.errors.required">
+                            Street is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Zip:</label>
+                    <input type="text" name="zip" formControlName="zip" [(ngModel)]="bidder.address.zip" class="form-control" />
+                    <div *ngIf="zip.invalid && (zip.dirty || zip.touched)" class="alert alert-danger">
+                        <div *ngIf="telephone.errors.required">
+                            Zip is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>City:</label>
+                    <input type="text" name="city" formControlName="city" [(ngModel)]="bidder.address.city" class="form-control" />
+                    <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert alert-danger">
+                        <div *ngIf="city.errors.required">
+                            City is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Region:</label>
+                    <input type="text" name="region" formControlName="region" [(ngModel)]="bidder.address.region" class="form-control" />
+                    <div *ngIf="region.invalid && (region.dirty || region.touched)" class="alert alert-danger">
+                        <div *ngIf="region.errors.required">
+                            Region is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Country:</label>
+                    <input type="text" name="country" formControlName="country" [(ngModel)]="bidder.address.country" class="form-control" />
+                    <div *ngIf="country.invalid && (country.dirty || country.touched)" class="alert alert-danger">
+                        <div *ngIf="country.errors.required">
+                            Country is required.
+                        </div>
+                    </div>
+                </div>
+                <span>
+                    <button type="submit" class="btn btn-success" [disabled]="!bidderForm.valid">Submit</button>
+                    <button type="reset" class="btn btn-danger">Reset</button>
+                </span>
+            </div>
+        </form>
+    </div>
+
+    <div id="Pv" class="col-sm-6" *ngIf="showList == true">
+
+        <div>
+            <label>Email Enterprise:</label>
+            <input type="text" [ngModelOptions]="{standalone:true}" [(ngModel)]="enterpriseMail" class="form-control" />
+            <div *ngIf="mailAdd > 0">
+                <p>{{mailAdd}} mail was add</p>
+            </div>
+            <br />
+            <span>
+                <button type="submit" class="btn btn-success" (click)="AddMail()">UploadMail</button>
+            </span>
+        </div>
+        <br />
+        <div class="form-group">
+            <label>Your Password Mail:</label>
+            <input name="psw" type="password" [(ngModel)]="email.password" class="form-control">
+        </div>
+        <select name="bidders" [(ngModel)]="bidderSelected" (change)="SelectedProvider($event)" multiple class="form-control">
+            <option *ngFor="let pro of bidderList" [ngValue]="pro">
+                {{pro.firstName}} {{pro.lastName}}
+            </option>
+        </select>
+        <br />
+        <span>
+            <button type="submit" class="btn btn-success" (click)="SendMail()">Submit</button>
+        </span>
+
+        <br /><br />
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Fax</th>
+                    <th>Tel</th>
+                    <th>Mail</th>
+                    <th>Domaine</th>
+                    <th>Type Enterprise</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let pro of bidderSelected">
+                    <td>{{ pro.firstName }}</td>
+                    <td>{{ pro.lastName }}</td>
+                    <td>{{ pro.fax }}</td>
+                    <td>{{ pro.tel }}</td>
+                    <td>{{ pro.email }}</td>
+                    <td>{{ pro.domaine }}</td>
+                    <td>{{ pro.typeEnterprise }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modify Offer</h4>
+            </div>
+            <div class="modal-body">
+                <form #userForm="ngForm" (ngSubmit)="onFormSubmit(userForm)">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Code:</label>
+                            <input name="code" [(ngModel)]="offerDetail.code" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Categorie:</label>
+                            <select name="categorie" [(value)]="offerDetail.categorie.libelle" class="form-control">
+                                <option *ngFor="let cat of categorieList" [ngValue]="cat"> {{cat.libelle}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Direction:</label>
+                            <select name="direction" [(value)]="offerDetail.direction.libelle" class="form-control">
+                                <option *ngFor="let dir of directionList" [ngValue]="dir"> {{dir.libelle}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Commission:</label>
+                            <select name="commission" [(value)]="offerDetail.commission.libelle" class="form-control">
+                                <option *ngFor="let com of commissionList" [ngValue]="com"> {{com.libelle}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Etat:</label>
+                            <input name="etat" [(ngModel)]="offerDetail.etat" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Intitule:</label>
+                            <input name="intitule" [(ngModel)]="offerDetail.intitule" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Description:</label>
+                            <textarea name="description" [(ngModel)]="offerDetail.description" type="text" class="form-control"> </textarea>
+                        </div>
+
+                    </div>
+                    <div class="col-md-5">
+
+                        <div class="form-group">
+                            <label>Place of Deposit:</label>
+                            <input name="placeDepot" [(ngModel)]="offerDetail.placeDepot" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Limit:</label>
+                            <p>{{offerDetail.dateLimit | date: 'dd/MM/yyyy'}}</p>
+                            <input name="dateLimit" [(ngModel)]="offerDetail.dateLimit" type="date" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Place Opened Plis:</label>
+                            <input name="placeOpened" [(ngModel)]="offerDetail.placeOpened" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Date Opened Plis:</label>
+                            <p>{{offerDetail.dateOpened | date: 'dd/MM/yyyy'}}</p>
+                            <input name="dateOpened" [(ngModel)]="offerDetail.dateOpened" type="date" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Publish:</label>
+                            <p>{{offerDetail.publish}}</p>
+                            <input name="publish" [(ngModel)]="offerDetail.publish" type="text" class="form-control">
+                        </div>
+
+                        <span>
+                            <button type="submit" class="btn btn-success" (click)="onFormSubmit()" data-dismiss="modal">Submit</button>
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+

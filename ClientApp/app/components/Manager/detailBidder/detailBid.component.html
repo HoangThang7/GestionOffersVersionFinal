@@ -1,0 +1,263 @@
+﻿
+
+<div class='container-fluid'>
+    <div class='row'>
+        <div *ngIf="user.type == 1" class='col-sm-3'>
+            <navManag-menu></navManag-menu>
+        </div>
+        <div *ngIf="user.type == 2" class='col-sm-3'>
+            <navUser-menu></navUser-menu>
+        </div>
+
+        <div id="Profil" class="well col-sm-8">
+
+            <div class="col-sm-4">
+                <ul>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> FirstName: </h4>  {{detail.firstName}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> LastName: </h4>  {{detail.lastName}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Tel:</h4> {{detail.tel}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Email:</h4> {{detail.email}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Fax:</h4>  {{detail.fax}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Domaine:</h4> {{detail.domaine}}
+                    </li>
+                </ul>
+            </div>
+            <div id="adress" class="col-sm-4">
+                <ul>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Enterprise:</h4> {{detail.typeEnterprise}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Street:</h4> {{detail.address.street}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Zip:</h4> {{detail.address.zip}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> City</h4> {{detail.address.city}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Region:</h4> {{detail.address.region}}
+                    </li>
+                    <li>
+                        <h4 [ngStyle]="{'color':'blue'}"> Country:</h4> {{detail.address.country}}
+                    </li>
+                </ul>
+                <span>
+                    <button id="modify" class="btn btn-success" data-toggle="modal" data-target="#bidderModal">Modify</button>                  
+                    <button id="modify" class="btn btn-primary" (click)="ShowOffer()">Offer</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div id="Depouille" *ngIf="showPlis == true" class="well col-sm-8">
+
+        <div class="col-sm-4">
+            <ul>
+                <li>
+                    <h4 [ngStyle]="{'color':'blue'}"> Code: </h4>  {{plis.code}}
+                </li>
+                <li>
+                    <h4 [ngStyle]="{'color':'blue'}"> Libelle: </h4>  {{plis.libelle}}
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-4">
+            <ul>
+                <li>
+                    <h4 [ngStyle]="{'color':'blue'}"> TypeDepot: </h4>  {{plis.typeDepot}}
+                </li>
+                <li>
+                    <h4 [ngStyle]="{'color':'blue'}"> DateDepot: </h4>  {{plis.dateDepot  | date: 'dd/MM/yyyy'}}
+                </li>
+             
+            </ul>
+            <span>
+                <button id="modifyPlis" class="btn btn-success" data-toggle="modal" data-target="#plisModal">Modify</button>
+                <button id="modifyPlis" class="btn btn-primary" (click)="Depouille()">Depouille</button>
+            </span>
+        </div>
+
+    </div>
+    
+        <div class="alert-danger" *ngIf="error"> {{error}} </div>
+    
+    <br/><br/><br/>
+    <div id="Pl" *ngIf="showPlis == false" class="alert alert-success col-sm-9" data-toggle="collapse" data-target="#plis">Plis<span class="caret"></span></div>
+    <div id="plis" *ngIf="showPlis == false" class="collapse">
+        <form [formGroup]="plisForm" (ngSubmit)="SavePlis()">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Code:</label>
+                    <input name="code" formControlName="code" [(ngModel)]="plis.code" type="text" class="form-control" />
+                    <div *ngIf="code.invalid && (code.dirty || code.touched)" class="alert alert-danger">
+                        <div *ngIf="code.errors.required">
+                            Code is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Libelle:</label>
+                    <input type="text" formControlName="libelle" [(ngModel)]="plis.libelle" name="libelle" class="form-control" />
+                    <div *ngIf="libelle.invalid && (libelle.dirty || libelle.touched)" class="alert alert-danger">
+                        <div *ngIf="libelle.errors.required">
+                            Libelle is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Date Depot:</label>
+                    <input type="date" [(ngModel)]="plis.dateDepot" name="dateDepot" formControlName="dateDepot" class="form-control" />
+                    <div *ngIf="dateDepot.invalid && (dateDepot.dirty || dateDepot.touched)" class="alert alert-danger">
+                        <div *ngIf="dateDepot.errors.required">
+                            Date Depot is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>TYpe Depot:</label>
+                    <select name="typeDepot" formControlName="typeDepot" [(ngModel)]="plis.typeDepot" class="form-control">
+                        <option *ngFor="let typ of typeDep" [ngValue]="typ"> {{typ}} </option>
+                    </select>
+                    <div *ngIf="typeDepot.invalid && (typeDepot.dirty || typeDepot.touched)" class="alert alert-danger">
+                        <div *ngIf="typeDepot.errors.required">
+                            Type is required.
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <button type="submit" class="btn btn-success" [disabled]="!plisForm.valid">Submit</button>
+                <button type="reset" class="btn btn-danger">Reset</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div id="bidderModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modify Bidder</h4>
+                </div>
+                <div class="modal-body">
+                    <form #modifyBidForm="ngForm" (ngSubmit)="ModifyBidder(modifyBidForm)">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>FirstName:</label>
+                                <input name="firstName" [(ngModel)]="detail.firstName" type="text" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>LastName:</label>
+                                <input name="lastName" type="text" [(ngModel)]="detail.lastName" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <input name="email" type="email" [(ngModel)]="detail.email" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Tel:</label>
+                                <input type="tel" name="tel" [(ngModel)]="detail.tel" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Fax:</label>
+                                <input type="text" name="fax" [(ngModel)]="detail.fax" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Domaine:</label>
+                                <input type="text" name="domaine" [(ngModel)]="detail.domaine" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Type Enterprise:</label>
+                                <input type="text" name="type" [(ngModel)]="detail.typeEnterprise" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Street:</label>
+                                <input type="text" [(ngModel)]="detail.address.street" name="street" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Zip:</label>
+                                <input type="text" name="zip" [(ngModel)]="detail.address.zip" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>City:</label>
+                                <input type="text" name="city" [(ngModel)]="detail.address.city" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Region:</label>
+                                <input type="text" name="region" [(ngModel)]="detail.address.region" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Country:</label>
+                                <input type="text" name="domaine" [(ngModel)]="detail.address.country" class="form-control" />
+                            </div>
+                            <span>
+                                <button type="submit" class="btn btn-success" (click)="ModifyBidder()" data-dismiss="modal">Submit</button>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                            </span>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer"></div>               
+            </div>
+        </div>
+    </div>
+
+    <div id="plisModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modify Plis</h4>
+                </div>
+                <div class="modal-body">
+                    <form #modifyPliForm="ngForm" (ngSubmit)="ModifyPlis(modifyPliForm)">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Code:</label>
+                                <input name="firstName" [(ngModel)]="plis.code" type="text" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Libelle:</label>
+                                <input name="lastName" type="text" [(ngModel)]="plis.libelle" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <input name="email" type="email" [(ngModel)]="plis.typeDepot" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Date:</label>
+                                <input type="date" name="tel" [(ngModel)]="plis.dateDepot" class="form-control" />
+                            </div>
+                            <span>
+                                <button type="submit" class="btn btn-success" (click)="ModifyPlis()" data-dismiss="modal">Submit</button>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                            </span>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+
+                    </div>
+                  </div>
+              </div>
+            </div>
+       </div>
+</div>

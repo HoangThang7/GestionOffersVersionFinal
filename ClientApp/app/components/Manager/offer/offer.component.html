@@ -1,0 +1,169 @@
+﻿
+
+<div class='container-fluid'>
+    <div class='row'>
+        <div class='col-sm-3'>
+            <navManag-menu></navManag-menu>
+        </div>
+       
+        <div class="col-sm-9">
+
+            <br /><br />
+            <div class="my-container">
+                <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+            </div>
+            <form [formGroup]="offerForm" (ngSubmit)="onFormSubmit()">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Code:</label>
+                        <input name="code" formControlName="code" [(ngModel)]="newOffer.code" type="text" class="form-control">
+                        <div *ngIf="code.invalid && (code.dirty || code.touched)" class="alert alert-danger">
+                            <div *ngIf="code.errors.required">
+                                Le Code is required.
+                            </div>
+                            <div *ngIf="code.errors.minlength">
+                                Le  Code doit avoir 8 characters
+                            </div>
+                            <div *ngIf="code.errors.maxlength">
+                                Le  Code doit avoir maximum 8 characters
+                            </div>
+                            <div *ngIf="code.errors.pattern">
+                                Le code doit commencer par deux lettres majuscules suivi par des chiffres
+                            </div>
+                            <div *ngIf="code.errors.CodeTaken">
+                                Le code existe déja
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Categorie:</label>
+                        <select name="categorie" formControlName="categorie" [(ngModel)]="newOffer.categorie" class="form-control">
+                            <option *ngFor="let cat of categorieList" [ngValue]="cat"> {{cat.libelle}} </option>
+                        </select>
+                        <div *ngIf="categorie.invalid && (categorie.dirty || categorie.touched)" class="alert alert-danger">
+                            <div *ngIf="categorie.errors.required">
+                                The Categorie is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Direction:</label>
+                        <select name="direction" formControlName="direction" [(ngModel)]="newOffer.direction" class="form-control">
+                            <option *ngFor="let dir of directionList" [ngValue]="dir"> {{dir.libelle}} </option>
+                        </select>
+                        <div *ngIf="direction.invalid && (direction.dirty || direction.touched)" class="alert alert-danger">
+                            <div *ngIf="direction.errors.required">
+                                The Direction is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Commission:</label>
+                        <select name="commission" formControlName="commission" [(ngModel)]="newOffer.commission" class="form-control">
+                            <option *ngFor="let com of commissionList" [ngValue]="com"> {{com.code}} </option>
+                        </select>
+                        <div *ngIf="commission.invalid && (commission.dirty || commission.touched)" class="alert alert-danger">
+                            <div *ngIf="commission.errors.required">
+                                The commission is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Etat:</label>
+                        <select formControlName="etat" [(ngModel)]="newOffer.etat" class="form-control">
+                            <option *ngFor="let et of etatOffer" [ngValue]="et"> {{et}} </option>
+                        </select>
+                        <div *ngIf="etat.invalid && (etat.dirty || etat.touched)" class="alert alert-danger">
+                            <div *ngIf="etat.errors.required">
+                                L'Etat is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Intitule:</label>
+                        <input formControlName="intitule" [(ngModel)]="newOffer.intitule" type="text" class="form-control">
+                        <div *ngIf="intitule.invalid && (intitule.dirty || intitule.touched)" class="alert alert-danger">
+                            <div *ngIf="intitule.errors.required">
+                                Te Intitule is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description:</label>
+                        <textarea name="description" formControlName="description" [(ngModel)]="newOffer.description" type="text" class="form-control"> </textarea>
+                        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger">
+                            <div *ngIf="code.errors.required">
+                                The Description is required.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Place of Deposit:</label>
+                        <input name="placeDepot" formControlName="placeDepot" [(ngModel)]="newOffer.placeDepot" type="text" class="form-control">
+                        <div *ngIf="placeDepot.invalid && (placeDepot.dirty || placeDepot.touched)" class="alert alert-danger">
+                            <div *ngIf="placeDepot.errors.required">
+                                The place is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Limit:</label>
+                        <input name="dateLimit" formControlName="dateLimit" [(ngModel)]="newOffer.dateLimit" type="date" class="form-control">
+                        <div *ngIf="dateLimit.invalid && (dateLimit.dirty || dateLimit.touched)" class="alert alert-danger">
+                            <div *ngIf="dateLimit.errors.required">
+                                The Date Limit is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Place Opened Plis:</label>
+                        <input name="placeOpened" formControlName="placeOpened" [(ngModel)]="newOffer.placeOpened" type="text" class="form-control">
+                        <div *ngIf="placeOpened.invalid && (placeOpened.dirty || placeOpened.touched)" class="alert alert-danger">
+                            <div *ngIf="placeOpened.errors.required">
+                                The place is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Date Opened Plis:</label>
+                        <input name="dateOpened" formControlName="dateOpened" [(ngModel)]="newOffer.dateOpened" type="date" class="form-control">
+                        <div *ngIf="dateOpened.invalid && (dateOpened.dirty || dateOpened.touched)" class="alert alert-danger">
+                            <div *ngIf="dateOpened.errors.required">
+                                The Date Opened is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div>
+                        <input type="file" multiple #inputFile accept="application/pdf" (change)="fileUpload($event)" />
+                        <br />
+                        <button type="button" (click)="upload()">Upload</button>
+                        <button type="button" (click)="cancelUpload()">Cancel</button>
+                    </div>
+                    <div *ngIf="taille">
+                        <br /><p>{{taille}} </p>
+                    </div>
+                    <ul>
+                        <li *ngFor="let fileName of selectedFiles; let i = index">
+                            {{fileName}}
+                        </li>
+                    </ul>
+                    <hr/>
+                    <span>
+                        <button type="submit" class="btn btn-success" [disabled]="!offerForm.valid">Submit</button>
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                    </span>
+                    <div class="alert-success" *ngIf="offer"> A new offer has been created</div>
+                    <div class="alert-danger" *ngIf="error"> {{error}} </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+

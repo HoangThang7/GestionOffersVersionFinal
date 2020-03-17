@@ -1,0 +1,189 @@
+
+<div class='container-fluid'>
+    <div class='row'>
+        <div *ngIf="CurrentUser.type == 0" class='col-sm-3'>
+            <nav-menu></nav-menu>
+        </div>
+        <div *ngIf="CurrentUser.type == 1" class="col-sm-3">
+            <navManag-menu></navManag-menu>
+        </div>
+        <div *ngIf="CurrentUser.type == 2" class="col-sm-3">
+            <navUser-menu></navUser-menu>
+        </div>
+
+        <div *ngIf="CurrentUser.type == 3" class="col-sm-3">
+            <navEnt-menu></navEnt-menu>
+        </div>
+        <div class='col-sm-9 body-content'>
+
+            <div id="ProfilImage" class="container col-md-1">
+
+                <img src="../../Images/ProfilLogo.jpg" class="thumbnail" alt="Bird" width="200" height="200">
+
+            </div>
+            <div id="ProfilInfo" class="well col-md-8">
+                <h3 [ngStyle]="{'color':'blue'}"> {{CurrentUser.firstName}} {{CurrentUser.lastName}}  <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#myModal"> </span></h3>
+
+
+
+                <div id="profil" class="col-md-4">
+
+                    <ul>
+                        <li>
+                            <h4 [ngStyle]="{'color':'blue'}"> FirstName: </h4>  {{CurrentUser.firstName}}
+
+                        </li>
+                        <li>
+                            <h4 [ngStyle]="{'color':'blue'}"> LastName: </h4>  {{CurrentUser.lastName}}
+
+                        </li>
+                        <li>
+
+                            <h4 [ngStyle]="{'color':'blue'}">Date:</h4> {{CurrentUser.date | date: 'dd/MM/yyyy'}}
+
+                        </li>
+                        <li>
+
+                            <h4 [ngStyle]="{'color':'blue'}">Email:</h4> {{CurrentUser.mail}}
+
+                        </li>
+                        <li *ngIf="CurrentUser.type == 3">
+
+                            <h4 [ngStyle]="{'color':'blue'}">Fax:</h4> {{CurrentUser.provider.fax}}
+
+                        </li>
+
+                        <li>
+
+                            <h4 [ngStyle]="{'color':'blue'}">Telephone:</h4> {{CurrentUser.numberTel}}
+
+                        </li>
+                       
+                        <li *ngIf="CurrentUser.type == 0">
+
+                            <h4 [ngStyle]="{'color':'blue'}">State:</h4> {{CurrentUser.type}}
+
+                        </li>
+                    </ul>
+                </div>
+                <div id="adress" class="col-md-4">
+                    <ul>
+                        <li *ngIf="CurrentUser.type == 3">
+
+                            <h4 [ngStyle]="{'color':'blue'}">Domaine:</h4>  {{CurrentUser.provider.domaine}}
+
+                        </li>
+                        <li *ngIf="CurrentUser.type == 3">
+
+                            <h4 [ngStyle]="{'color':'blue'}">Enterprise:</h4> {{CurrentUser.provider.typeEnterprise}}
+
+                        </li>
+                        <li>
+
+                            <h4 [ngStyle]="{'color':'blue'}">Street:</h4> {{CurrentUser.address.street}}
+
+                        </li>
+                        <li>
+
+                            <h4 [ngStyle]="{'color':'blue'}">Zip:</h4> {{CurrentUser.address.zip}}
+
+                        </li>
+
+                        <li>
+
+                            <h4 [ngStyle]="{'color':'blue'}">City:</h4> {{CurrentUser.address.city}}
+
+                        </li>
+                        <li>
+
+                            <h4 [ngStyle]="{'color':'blue'}">Country:</h4> {{CurrentUser.address.country}}
+
+                        </li>
+                        <li>
+
+                            <h4 [ngStyle]="{'color':'blue'}">Region:</h4> {{CurrentUser.address.region}}
+
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modify User</h4>
+                </div>
+                <div class="modal-body">
+                    <form #userForm="ngForm" (ngSubmit)="onFormSubmit(userForm)">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>FirstName:</label>
+                                <input name="firstName" [(ngModel)]="CurrentUser.firstName" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>LastName:</label>
+                                <input name="lastName" [(ngModel)]="CurrentUser.lastName" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <input name="email" [(ngModel)]="CurrentUser.mail" type="email" class="form-control" placeholder="Enter Email">
+                            </div>
+                            <div class="form-group">
+                                <label>Telephone:</label>
+                                <input name="telephone" [(ngModel)]="CurrentUser.numberTel" type="tel" class="form-control">
+                            </div>
+                            <div *ngIf="CurrentUser.type == 3"  class="form-group">
+                                <label>Fax:</label>
+                                <input name="fax" [(ngModel)]="CurrentUser.fax" type="text" class="form-control">
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Street:</label>
+                                <input name="street" [(ngModel)]="CurrentUser.address.street" type="text" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Zip:</label>
+                                <input name="zip" [(ngModel)]="CurrentUser.address.zip" type="number" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>City:</label>
+                                <input name="city" [(ngModel)]="CurrentUser.address.city" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Country:</label>
+                                <input name="country" [(ngModel)]="CurrentUser.address.country" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Region:</label>
+                                <input name="region" [(ngModel)]="CurrentUser.address.region" type="text" class="form-control">
+                            </div>
+
+                            <span>
+                                <button type="submit" class="btn btn-success" (click)="onFormSubmit()" data-dismiss="modal">Submit</button>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                            </span>
+                        </div>
+                    </form>
+                        </div>
+                        <div class="modal-footer">
+                           
+                        </div>
+                </div>
+
+        </div>
+    </div>
+
+            <router-outlet></router-outlet>
+        
+    
+</div>

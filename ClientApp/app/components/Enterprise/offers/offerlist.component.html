@@ -1,0 +1,87 @@
+﻿
+<div class='container-fluid'>
+    <div class='row'>
+        <div class='col-sm-3'>
+            <navEnt-menu></navEnt-menu>
+        </div>
+                <div class="col-sm-9">
+                    <br /><br />
+                    <nav class="navbar navbar-inverse">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button (click)="ShowOffers()"><span class="glyphicon glyphicon-book"></span></button>
+                                <button (click)="SortDescend()"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                                <button (click)="SortAscend()"><span class="glyphicon glyphicon-arrow-up"></span></button>                             
+                            </div>
+                            <form class="navbar-form navbar-right">
+
+                                <div class="input-group">
+                                    <input type="text" [(ngModel)]="codeOffer" [ngModelOptions]="{standalone:true}" class="form-control" placeholder="Search">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </nav>
+                    <hr />
+
+                    <div *ngIf="show == false">
+                        <div class="well" *ngFor="let offer of offers | filter:codeOffer | paginate: { id: 'foo', itemsPerPage: 5, currentPage: p, totalItems: offers.count }">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <img width="150" height="150" src="../../Images/AngularLogo.png" alt="offer picture" />
+                                </div>
+                                <div class="col-sm-7 center-block">
+                                    <h5>{{offer.code}}</h5>
+
+                                    <h5 [ngStyle]="{'color':'blue'}"><span class="glyphicon glyphicon-envelope"></span> Etat: {{offer.etat}} </h5>
+                                    <h5 [ngStyle]="{'color':'blue'}"><span class="glyphicon glyphicon-envelope"></span> Categorie: {{offer.categorie.libelle}} </h5>
+                                    <h5 [ngStyle]="{'color':'blue'}"><span class="glyphicon glyphicon-envelope"></span> Depot: {{offer.placeDepot}} </h5>
+                                    <h5 [ngStyle]="{'color':'blue'}"><span class="glyphicon glyphicon-envelope"></span> Limit: {{offer.dateLimit | date}} </h5>
+
+                                    <div class="pull-right">
+                                        <button id="btnGr" class="btn-primary" (click)="DetailOffer(offer)">Detail</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <pagination-controls id="foo"
+                                             (pageChange)="pageChanged($event)"
+                                             maxSize="10"
+                                             directionLinks="true"
+                                             autoHide="false"
+                                             previousLabel="Previous"
+                                             nextLabel="Next"
+                                             screenReaderPaginationLabel="Pagination"
+                                             screenReaderPageLabel="page"
+                                             screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </div>
+                    <div *ngIf="show == true">
+                        <div class="well" *ngFor="let off of offerSearch | filter:codeOffer">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <img width="150" height="150" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" alt="offer picture" />
+                                </div>
+                                <div class="col-sm-7 center-block">
+                                    <h5>{{off.code}}</h5>
+
+                                    <h5 [ngStyle]="{'color':'blue'}"><span class="glyphicon glyphicon-envelope"></span> Etat: {{off.etat}} </h5>
+                                    <h5 [ngStyle]="{'color':'blue'}"><span class="glyphicon glyphicon-envelope"></span> Categorie: {{off.categorie.libelle}} </h5>
+                                    <h5 [ngStyle]="{'color':'blue'}"><span class="glyphicon glyphicon-envelope"></span> Depot: {{off.placeDepot}} </h5>
+                                    <h5 [ngStyle]="{'color':'blue'}"><span class="glyphicon glyphicon-envelope"></span> Limit: {{off.dateLimit | date}} </h5>
+
+                                    <div class="pull-right">
+                                        <button id="btnGr" class="btn-primary" (click)="DetailOffer(off)">Detail</button>
+                                        <button id="btnGr" class="btn-danger" (click)="RemoveOffer(off)">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

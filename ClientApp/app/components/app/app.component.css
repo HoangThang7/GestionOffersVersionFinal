@@ -1,0 +1,130 @@
+
+#ProfilInfo {
+    position: relative;
+    top: 50px;
+    left: 150px;
+}
+
+
+#ProfilImage {
+    position: relative;
+    top: 50px;
+    
+}
+
+#addEnter {
+    position: relative;
+    top: 40px;
+    right: 100px;
+}
+
+#BackImage {
+    background-image: url(../Images/Gestion.jpg);
+    background-size: 100%;
+}
+
+#adress {
+    position: relative;
+    left: 100px;
+}
+
+#Pv {
+    position: relative;
+    left: 300px;
+}
+
+#Pl {
+    position: relative;
+    left: 330px;
+    top: 50px;
+}
+
+#demo {
+    position: relative;
+    left: 300px;
+}
+
+#bidd {
+    position: relative;
+    left: 300px;
+}
+
+#plis {
+    position: relative;
+    top: 50px;
+    left: 320px;
+}
+
+#bidder {
+    position: relative;
+    left: 300px;
+}
+
+#contrat {
+   position: relative;
+   
+   top: 100px;
+}
+
+#modify {
+    position: relative;
+    left: 250px;
+    
+}
+
+#modifyPlis {
+    position: relative;
+    left: 400px;
+}
+
+#modifyDep {
+    position: relative;
+    left: 600px;   
+}
+
+#modifyCont {
+    position: relative;
+    left: 600px;
+}
+
+#Profil {
+    position: relative;
+    top: 40px;
+}
+
+#Depouille {
+    position: relative;
+    left: 370px;
+    top: 50px;
+}
+
+#depouillement {
+    position: relative;
+    top: 50px;
+    left: 320px;
+}
+
+#contract {
+    position: relative;
+    top: 90px;
+    left: 50px;
+}
+
+#Plis {
+    position: relative;
+    left: 340px;
+    top: 50px;
+}
+
+#btnGr {
+    position: relative;
+    left: 250px;
+}
+
+.ng-valid[required], .ng-valid.required {
+    border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form) {
+    border-left: 5px solid #a94442; /* red */
+}

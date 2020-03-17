@@ -1,0 +1,137 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCoreCompatibility" Version="1.1.0" />
+    <PackageReference Include="AspNetCoreCurrentRequestContext" Version="2.0.0" />
+    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
+    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+    <PackageReference Include="WindowsAzure.Storage" Version="9.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Compile Remove="ClientApp\app\components\Manager\plis\**" />
+    <Compile Remove="ModelDto\**" />
+    <Content Remove="ClientApp\**" />
+    <Content Remove="ModelDto\**" />
+    <EmbeddedResource Remove="ClientApp\app\components\Manager\plis\**" />
+    <EmbeddedResource Remove="ModelDto\**" />
+    <None Remove="ClientApp\app\components\Manager\plis\**" />
+    <None Remove="ModelDto\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\app\components\Admin\detailUser\detail.component.ts" />
+    <None Remove="ClientApp\app\components\Enterprise\detailoffer\offerDetail.component.ts" />
+    <None Remove="ClientApp\app\components\Enterprise\navmenu\navEnt.component.ts" />
+    <None Remove="ClientApp\app\components\Enterprise\offers\offerlist.component.ts" />
+    <None Remove="ClientApp\app\components\Manager\commission\commission.component.ts" />
+    <None Remove="ClientApp\app\components\Manager\contract\contract.component.ts" />
+    <None Remove="ClientApp\app\components\Manager\detailBidder\detailBid.component.ts" />
+    <None Remove="ClientApp\app\components\Manager\detailOffer.component.ts" />
+    <None Remove="ClientApp\app\components\Manager\fetchcomission\fetchComis.component.ts" />
+    <None Remove="ClientApp\app\components\Manager\fetchoffer\fetchoffer.component.ts" />
+    <None Remove="ClientApp\app\components\Manager\file.ts" />
+    <None Remove="ClientApp\app\components\Manager\navManag.component.ts" />
+    <None Remove="ClientApp\app\components\Manager\offer\offer.component.ts" />
+    <None Remove="ClientApp\app\components\MoelNg\Address.ts" />
+    <None Remove="ClientApp\app\components\MoelNg\Bidder.ts" />
+    <None Remove="ClientApp\app\components\MoelNg\Commission.ts" />
+    <None Remove="ClientApp\app\components\MoelNg\Contract.ts" />
+    <None Remove="ClientApp\app\components\MoelNg\CustomDateFormatter.ts" />
+    <None Remove="ClientApp\app\components\MoelNg\Depouillement.ts" />
+    <None Remove="ClientApp\app\components\MoelNg\Direction.ts" />
+    <None Remove="ClientApp\app\components\MoelNg\Plis.ts" />
+    <None Remove="ClientApp\app\components\MoelNg\Provider.ts" />
+    <None Remove="ClientApp\app\components\MoelNg\User.ts" />
+    <None Remove="ClientApp\app\components\services\AuthService.ts" />
+    <None Remove="ClientApp\app\components\services\BidderService.ts" />
+    <None Remove="ClientApp\app\components\services\CategorieService.ts" />
+    <None Remove="ClientApp\app\components\services\CommissionService.ts" />
+    <None Remove="ClientApp\app\components\services\ContractService.ts" />
+    <None Remove="ClientApp\app\components\services\DirectionService.ts" />
+    <None Remove="ClientApp\app\components\services\HistoryService.ts" />
+    <None Remove="ClientApp\app\components\services\OfferService.ts" />
+    <None Remove="ClientApp\app\components\services\PlisService.ts" />
+    <None Remove="ClientApp\app\components\User\navigUser.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\components\Admin\detailUser\detail.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\Enterprise\detailoffer\offerDetail.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\Enterprise\navmenu\navEnt.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\Enterprise\offers\offerlist.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\Manager\commission\commission.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\Manager\contract\contract.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\Manager\detailBidder\detailBid.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\Manager\detailoffer\detailOffer.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\Manager\fetchcomission\fetchComis.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\Manager\fetchoffer\fetchoffer.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\Manager\navig\navManag.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\Manager\offer\offer.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\MoelNg\Address.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\MoelNg\Commission.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\MoelNg\Contract.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\MoelNg\CustomDateFormatter.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\MoelNg\Depouillement.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\MoelNg\Bidder.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\MoelNg\Direction.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\MoelNg\Plis.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\MoelNg\Provider.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\MoelNg\User.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\services\AuthService.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\services\BidderService.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\services\CategorieService.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\services\CommissionService.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\services\ContractService.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\services\DirectionService.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\services\HistoryService.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\services\OfferService.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\services\PlisService.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\User\navig\navigUser.component.ts" />
+  </ItemGroup>
+
+  <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+
+    <!-- In development, the dist files won't exist on the first run or when cloning to
+         a different machine, so rebuild them if not already present. -->
+    <Message Importance="high" Text="Performing first-run Webpack build..." />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec Command="npm install" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --env.prod" />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="wwwroot\dist\**; ClientApp\dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+</Project>
